@@ -1,0 +1,5 @@
+
+# GLFW
+https://github.com/glfw/glfw
+# GLEW
+https://github.com/nigels-com/glew/releases/download/glew-2.1.0/glew-2.1.0.tgz
