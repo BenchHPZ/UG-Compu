@@ -24,4 +24,4 @@ Para cualquier _otro proposito_ este repositorio queda bajo la
 [Mit License](./LICENSE) y no tiene compromiso alguno de desempeño o fiabilidad.
 
 ### Autor
-- [Benjamin Rivera][sitioBench]
+- [Benjamin Rivera](sitioBench)
