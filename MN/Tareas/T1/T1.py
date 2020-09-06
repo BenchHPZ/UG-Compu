@@ -1,5 +1,6 @@
 import numpy as np
 
+# General
 def epsilonMaquina(tipoDato):
     """ Funcion que trata de calcular el epsilon 
     de la maquina mediante el algoritmo antes pre_
@@ -38,12 +39,12 @@ def epsilonDouble():
     """
     return epsilonMaquina(np.float64)
 
-
+# Segunda parte
 def respuesta(res):
     """ Funcion para formatear la respuesta. """
     return "iguales" if res else "diferentes"
 
-def comparacion(epsilon, tipoDato):
+def comparacion(epsilon):
     """ Esta funcion resivira el epsilon a eva_
     luar y el tipo de dato al que este correspon_
     de para hacer las comparaciones solicitadas
@@ -57,35 +58,32 @@ def comparacion(epsilon, tipoDato):
             True implica que son iguales
             False implica que son diferentes
     """
-    tD = tipoDato # Para escribir menos
+    tD = type(epsilon) # Para escribir menos
     print(f'Con {epsilon=} y tipo de dato = {str(tD)} se da que')
     
     # Comprobaciones
-    print(f'{respuesta(tD(1) + epsilon == tD(1))         =}')
-    print(f'{respuesta(epsilon/tD(2) == tD(0))           =}')
-    print(f'{respuesta(tD(1) + epsilon/tD(2) == tD(1))   =}')
-    print(f'{respuesta(tD(1) - epsilon/tD(2) == tD(1))   =}')
-    print(f'{respuesta(tD(1) - epsilon/tD(4) == tD(1))   =}')
-    print(f'{respuesta(epsilon**2 == tD(0))              =}')
-    print(f'{respuesta(epsilon + epsilon**2 == epsilon)  =}')
-    print(f'{respuesta(epsilon - epsilon**2 == epsilon)  =}')
+    print(f'{respuesta( tD(1 + epsilon )   == 1 )  =}')
+    print(f'{respuesta( tD( epsilon/2 )    == 0 )  =}')
+    print(f'{respuesta( tD(1 + epsilon/2 ) == 1 )  =}')
+    print(f'{respuesta( tD(1 - epsilon/2 ) == 1 )  =}')
+    print(f'{respuesta( tD(1 - epsilon/4 ) == 1 )  =}')
+    print(f'{respuesta( tD( epsilon**2 )   == 0 )  =}')
+    print(f'{respuesta(epsilon + tD(epsilon**2) == epsilon) =}')
+    print(f'{respuesta(epsilon - tD(epsilon**2) == epsilon) =}')
     
     print('...\n')
-    
-
 
 
 if __name__ == '__main__':
     # Epsilons calculados
-    eF = epsilonFloat()
-    eD = epsilonDouble()
+    eF = np.float32(epsilonFloat())
+    eD = np.float64(epsilonDouble())
 
     # Imprimir en pantalla
-    print(f'Se calculalron los epsilons \n\t{eF=} y \n\t{eD=} \n'
-          'para 32 y 64 bits correspondientemente.\n')
+    print(f'Se calculalron los epsilons \n\teF={eF} y \n\teF={eD} \n para 32 y 64 bits correspondientemente.\n')
 
     # Hacemos la comparacion para 32bits
-    comparacion(eF, np.float32)
+    comparacion(eF)
     # y para 64
-    comparacion(eD, np.float64)
+    comparacion(eD)
 
