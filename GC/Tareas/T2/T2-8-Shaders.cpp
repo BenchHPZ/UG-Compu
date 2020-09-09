@@ -143,9 +143,9 @@ int main( void ){
 				 2*sizeof(float), 0);
 
 	// Si el shader esta en una carpeta local Shader
-	//ShaderStruct src = parseShader("Shader/basic.shader");
+	ShaderStruct src = parseShader("Shader/basic.shader");
 	// Si el shader esta en el mismo espacio que el programa
-	ShaderStruct source = parseShader("basic.shader");
+	//ShaderStruct source = parseShader("basic.shader");
 	cout << "Pass" << endl;
 
 	cout << "VERTEX" << endl; 
