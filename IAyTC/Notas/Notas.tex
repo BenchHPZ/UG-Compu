@@ -1,0 +1,231 @@
+\documentclass[12pt]{book}
+\usepackage[spanish]{babel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   %%
+%%        Datos Trabajo     %%  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\titulo}[0]{Notas de clase}
+\newcommand{\materia}[0]{Inteligencia Artificial y Teor\'ia de la Computaci\'on}
+\newcommand{\grupo}[0]{\'Unico}
+\newcommand{\unidad}[0]{Seccion}
+
+\newcommand{\periodo}[0]{Ago-Dic 2020}
+
+
+\newcommand{\universidad}[0]{Universidad de Guanajuato}
+\newcommand{\curso}[0]{Lic. en Computaci\'on Matem\'atica}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{soul}
+\usepackage{thmtools}
+	
+\usepackage{geometry}
+	\geometry{}
+
+\usepackage{graphicx}
+	\graphicspath{ {assets/} }
+
+\usepackage{hyperref}
+	\hypersetup{
+			pdftex,
+		        pdfauthor={bench},
+		        pdftitle={\titulo},
+		        pdfsubject={\materia},
+		        pdfkeywords={\grupo, \unidad, UG},
+		        pdfproducer={Latex with hyperref, Ubuntu},
+		        pdfcreator={pdflatex, gummi},
+			colorlinks=true,
+				linkcolor=blue,
+				urlcolor=cyan,
+				filecolor=yellow}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
+		
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{lemma}{Lemma}[teorema]
+
+\newtheorem{definicion}{Definicion}[part]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{
+	\ \\ Benjam\'in Rivera \\
+	\bf{\titulo}\\\ \\}
+
+\author{
+	\universidad \\
+	\textit{\curso} \\
+	\textit{Materia:} \materia \\
+	\textit{Grupo:} \grupo \\
+	\textit{Periodo:} \periodo }
+
+\date{\textit{\'Ultima actualizaci\'on:} \today}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%        Documento         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+
+\section*{Informaci\'on general}
+
+\par Notas del curso \textbf{\materia} impartido por los profesores \textit{Jes\'us Rodr\'iguez Viorato} (jesus@cimat.mx) y \textit{Arturo Hern\'andez Aguirre} (artha@cimat.mx). Este curso fue ofrecido para los estudiantes de la \textit{\curso} durante el periodo \textit{\periodo}.
+
+\par Dado el panorama del momento, las clases seran ofrecidas en modalidad a distancia. En el caso de este curso se decidio por usar \textit{Classroom} y \textit{BlueJueans} para organizar el curso y realizar videoconferencias, respectivamente. Es importante tener en cuenta que, a pesar de que el curso es virtual, no es autogestivo; esto implica que se debe asistir a clases en un horario especifico.
+
+\subsubsection*{Calificaci\'on}
+
+\par La calificaci\'on de este curso estara dividida en dos partes
+	\begin{quote} \begin{enumerate}[I]
+		\item \textbf{Teor\'ia de la computaci\'on} $50\%$
+			\begin{enumerate}
+				\item Tareas $0\%$
+				\item Participaci\'on $30\%$
+				\item Ex\'amenes $70\%$
+			\end{enumerate}		
+		\item \textbf{Inteligencia Artificial} $50\%$
+			\begin{enumerate}
+				\item Pendiente
+				\item ...
+			\end{enumerate}
+	\end{enumerate} \end{quote}
+
+
+
+\listoftheorems
+\tableofcontents
+
+
+\part{Teor\'ia de la Computaci\'on}
+
+\section*{Biblograf\'ia}
+	
+	\par Sugeridas
+	\begin{enumerate}
+		\item Introduction to Languages and the Theory of Computation. Jhon C. Martin
+		\item Sipser, Michael. Introduction to the Theory of Computation. Thomson Course Technology, 2006.
+		\item Hopcroft, John E. et. Al. Introduction to Automata Theory, Languages and Computation. Pearson. 2008.
+	\end{enumerate}
+	
+	\par Extras
+	\begin{enumerate}
+		\item Viso G., E. (2015). \textit{Introducción a Autómatas y Lenguajes Formales} (2.a ed.). Las prensas de Ciencia.
+	\end{enumerate}
+
+\chapter{Aut\'omatas}
+
+	\par La historia corta es que los \textit{Aut\'omatas} son  \textbf{maquinas de estados} que usamos para representar procesos. No todos los aut\'omatas tienen las mismas capacidades, y despu\'es estos son usados para calcular la complejidad de los procesos que pueden, o no, ser representados. Despu\'es de trabajar un rato con ellos llegamos a la instancia m\'as importante de estos, la \textbf{M\'aquina de Turing}; que como dato curioso podemos decir que nuestras computadoras actuales (las no cu\'anticas) son intentos de reporoducir a este aut\'omata.
+	\begin{quote}
+		La teor\'ia de aut\'omatas es el modelo computacional m\'as sencillo.
+	\end{quote}
+	Posteriormente se usara a estos para estudiar conceptos como \textbf{computabilidad} y \textbf{complejidad}.
+	
+	\par Todo aut\'omata esta compuesto de cuatro partes escenciales; \textit{estados, estados iniciales, estados aceptores y relaciones de transici\'on}; en la figura \ref{fig: automata}. Despu\'es se van agregando partes y limitantes, pero estas son las partes escenciales de estos.
+
+	\begin{figure}[h]
+		\centering
+			\includegraphics[scale=0.5]{example-image}
+		\caption{Aut\'omata Finito}
+		\label{fig: automata}
+	\end{figure}
+	
+	\par Todos los aut\'omatas trabajaran con cadenas pertenecientes al \textit{alfabeto*} y, siguiendo las relaciones de transici\'on, diremos que una \textit{cadena es aceptada} si y solo si el estado final al que se llega con dicha cadena esta contenida entre los \textit{estados aceptores}.
+	
+	\par Adem\'as, todos los aut\'omatas $A$ se pueden asociar a un lenguaje $L$. De manera que, si para cualquier cadena $l \in L$ es cierto que la cadena $l$ es aceptada por el au\'omata $A$, entonces decimos que $L$ es regular.
+	
+	
+	\section{Aut\'omatas Finitos}
+	
+		\par Los \textit{Aut\'omatas Finitos} \textbf{(AF)} son los m\'as simples de los aut\'omatas que se estudiaran en este curso. Su definici\'on formal es
+		
+		\begin{definicion}[AF]
+			Un \textbf{Aut\'omata Finito (AF)} es una $5\text{-tupla}$ $(Q, \Sigma, \delta, q_0, F)$ donde
+			\begin{enumerate}
+				\item $Q$ es un conjunto finito que representa a los \textbf{estados}
+				\item $\Sigma$ es un conjunto finito que representa el \textbf{alfabeto}
+				\item $\delta$ es una aplicaci\'on tal que $\delta:Q\times\Sigma \mapsto Q$ como la funci\'on de transici\'on.
+				\item $q_0 \in Q$ como el estado inicial.
+				\item $F\subseteq Q$ como el conjunto de los estados aceptores. 
+			\end{enumerate}
+		\end{definicion}
+
+		\subsection{Cadenas y Lenguajes}
+		
+		\par Como ya se hab\'ia mencionado, una cadena $c$ es un arreglo finito de elementos pertenecientes a un alfabeto $\Sigma$.
+		
+		\begin{definicion}[$\Sigma^*$]
+			Se define a $\Sigma^*$ como al conjunto de todas las posibles combinaciones finitas de los elementos de $\Sigma$
+		\end{definicion}
+		
+		\par Luego, a los subconjuntos de $\Sigma^*$ que cumplan con alguna caracteristica en especifico \footnote{como ser aceptados por un aut\'omata xP} los llamamos \textbf{Lenguajes}. Entre cadenas y lenguajes una de las operaciones m\'as comunes es la \textbf{concatenaci\'on}
+		
+		\begin{definicion}[Concatenaci\'on lenguajes]
+			Sean $L_1, L_2$ lenguajes dados. La concatenaci\'on entre lenguajes $L_1L_2$ queda definida por
+			$$ L_1\circ L_2 = \{ w_1, w_2 \in \Sigma^* | w_1\in L_1 \wedge w_2\in L_2\}$$
+		\end{definicion}
+		
+		En la definici\'on anterior existen dos formas aceptadas para denotar la concatenaci\'on de dos lenguajes; de manera que $L_1\circ L_2$ es lo mismo que $L_1 L_2$. Adem\'as, como con la uni\'on de lenguajes regulares, se da que
+		
+		\begin{teorema}
+			Si $L_1, L_2$ son lenguajes regulares, entonces existe un aut\'omata tal que la concatenaci\'on $L_1\circ L_2$ es regular.
+		\end{teorema}
+	
+		La prueba de esta secci\'on se queda pendiente para la Secci\'on~\ref{sec: AFND}
+
+
+
+	\section{Aut\'omatas Finitos No Deterministas} \label{sec: AFND}
+	
+	\par Los \textbf{Aut\'omatas Finitos No Deterministas (AFND)} se pueden considerar como una ampliaci\'on de los \textbf{AF}\footnote{Aunque m\'as adelante se demostrara que estos son equivalentes}. Estos permiten bosquejar aut\'omatas m\'as rapido e intuitivos que antes.
+	
+	\par Las nuevas reglas que los AFND introducen, en comparaci\'on con los AF, son las siguientes:
+	\begin{enumerate}
+		\item Permite repetir transiciones de un nodo.
+		\item Puede haber nodos que no otorguen una transici\'on para cada caracter de $\Sigma$.
+		\item Se introducen las transiciones vacias.
+	\end{enumerate}
+	
+	\begin{figure}[htp]
+		\centering
+			\includegraphics[scale=0.4]{example-image}
+		\caption{Aut\'omata Finifto No Determinista}
+		\label{fig: AFND}
+	\end{figure}
+	
+	\par Lo primero que se debe notar como diferencia es que, para una cadena, existiran distitnos estados finales (y algunos de los caminos pueden \textit{romperse} antes de leer toda la cadena). 
+
+
+% section AFND (end)
+	
+	
+
+
+
+
+
+
+\chapter{Computabilidad}
+	\begin{quote}
+		La \textbf{computabilidad} implica resolver la pregunta \textit{Se puede resolver?}
+	\end{quote}
+	
+\chapter{Complejidad}
+	\begin{quote}
+		La \textbf{complejidad} trata de encontrar una medida respecto a que tan complicado es un problema.
+	\end{quote}
+
+
+\part{Inteligencia Artificial}
+
+
+\end{document}
