@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tarea 3
+# # Tarea 4
 # 
 # _Tarea 4_ de _Benjamín Rivera_ para el curso de __Métodos Numéricos__ impartido por _Joaquín Peña Acevedo_. Fecha limite de entrega __27 de Septiembre de 2020__.
 
@@ -23,14 +23,14 @@
 # 
 # #### Si todo sale mal
 # 
-# <a href="https://colab.research.google.com/gist/BenchHPZ/813abd96c1dac91b038905ac85cc425c/tarea3.ipynb">
+# <a href="https://colab.research.google.com/gist/BenchHPZ/3e3a54ddefcd31969b2440764ccc4f58/tarea4.ipynb">
 #     <img src="../../../assets/colab-badge.svg" 
 #          alt="Open In Colab"/>
 # </a>
 # 
 # En caso de que todo salga mal, tratare de dejar una copia disponible en __GoogleColab__ que se pueda ejecutar con la versión de __Python__ de _GoogleColab_
 
-# In[2]:
+# In[3]:
 
 
 usage = """
@@ -40,8 +40,8 @@ programa espera leer los archivos de tipo npy
 Alumno: Benjamin Rivera
 
 Usage:
-  Tarea4.py ejercicio1 <matA> <vecB> [--path=<path>]
-  Tarea4.py ejercicio2 <matA> <vecB> [--path=<path>]
+  Tarea4.py ejercicio1 <matA> <vecB> [-p]
+  Tarea4.py ejercicio2
   Tarea4.py -h | --help
 
 Options:
@@ -56,6 +56,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from copy import deepcopy
 from scipy.linalg import solve_triangular
+from numpy.linalg import cholesky
 
 NOTEBOOK = False
 
@@ -323,12 +324,16 @@ if NOTEBOOK:
         print('\n')
 
 
+# #### Como ejecutar
+# 
+# ![Ejemplo ejecucion consola](assets/T3-E1.png)
+
 # ## Ejercicio 2
 # 
 # Programar el algoritmo de \textbf{factorizaci\'on de Cholesky} y resuelva un sistema de ecuaciones lineales.
 # 
 
-# In[17]:
+# In[8]:
 
 
 # Parte 1
@@ -363,11 +368,11 @@ def factChol(A, n, t):
     return None
 
 
-# In[18]:
+# In[9]:
 
 
 # Parte 2
-
+"""
 def transpose(M, n):
     """ Calculo de la matriz transpuesta 
         
@@ -383,14 +388,14 @@ def transpose(M, n):
             ret[j,i] = M[i,j]
         
     return ret
+"""
 
-
-# In[19]:
+# In[5]:
 
 
 # Parte 3
 
-def solChol( A, n, b,/, t=np.finfo(np.float64).eps, dtype=np.float64):
+def solChol( A, n, b,/, t=None, dtype=np.float64):
     """ Funcion para resolver con Cholesky
     
     Esta funcion recibira una funcion A simetrica y
@@ -409,16 +414,23 @@ def solChol( A, n, b,/, t=np.finfo(np.float64).eps, dtype=np.float64):
                 caso se regresa el apuntador al 
                 vector de respuestas
     """
-    L = factChol(A, n, t)
+    if t == None: t = np.finfo(dtype).eps
     
-    if not isinstance(L, np.ndarray):
-        return None
-    else:
-        return genSolLU(L, L.transpose(), n, b, [i for i in range(n)], t)
-        
+    try:
+        L = factChol(A)
+    except Exception as e:
+        raise Exception('Error al factorizar')
+
+    try:
+        if not isinstance(L, np.ndarray):
+            return None
+        else:
+            return genSolLU(L, L.transpose(), n, b, [i for i in range(n)], t)
+    except:
+        raise Exception('Error al generar solucion')
 
 
-# In[20]:
+# In[13]:
 
 
 # Parte 4
@@ -439,7 +451,7 @@ def Ejercicio2(matA, vecB,/, path='datosChol/npy/', dtype=np.float64):
         print(f'Error =\n     {error}')
 
 
-# In[21]:
+# In[14]:
 
 
 # Parte 5
@@ -450,7 +462,15 @@ if NOTEBOOK:
         print('\n')
 
 
-if __name__ == "__main__" and not NOTEBOOK:
+# #### Como ejecutar
+# 
+# ![Ejemplo ejecucion consola](assets/T3-E2.png)
+
+# In[ ]:
+
+
+
+if __name__ == "__main__":
 
     import doctest
     from docopt import docopt
@@ -458,9 +478,7 @@ if __name__ == "__main__" and not NOTEBOOK:
     doctest.testmod()
     args = docopt(usage, version='Tarea4, prb')
     
-    if len(sys.argv) >= 2:
-        if   args['ejercicio1']:
-            Ejercicio1(args['<matA>'], args['<vecB>'], args['--path'])
-        elif args['ejercicio2']:
-            Ejercicio2(args['<matA>'], args['<vecB>'], args['--path'])
-
+    if   args['ejercicio1']:
+        Ejercicio1(args['<matA>'], args['<vecB>'], args['--path'])
+    elif args['ejercicio2']:
+        Ejercicio2(args['<matA>'], args['<vecB>'], args['--path'])
