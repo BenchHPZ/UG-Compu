@@ -1,0 +1,32 @@
+Tenemos que RESET
+    {xx...xqa -> qxx...xb}
+
+Sea U un caracter unico que no este en el abecedario original.
+Sea x' el valor alterno a x para identificar
+
+Empezamos con
+  {xxx...xxqa}
+    Usamos a -> U, RESET
+      {xxx...xxqa -> qxxx...xxU}
+    
+    Si lees U estas al inicio [Fin]
+    Si lees x avanza x->R
+    	Si lees x ve a [prod]
+    	Si lees U, estabas casi al inicio
+    		RESET y ve a [Fin]
+    
+    [prod]
+    Si lees x' avanzas hasta encontrar x.  x'->R
+      {qx'x'x...xxU -> x'qx'x...xxU -> x'x'qx...xxU}
+    Si lees x, marcas y avanzas dos (x->x',R)->R
+      {qxxx...xxU -> x'xqx...xxU}
+        Si lees x vamos RESET y a [prod] x->RESET
+        Si lees U ponemos b y vamos a [casi] U->b->RESEET
+    Si lees
+        
+    [casi]
+    Avanza quitando primas  x'->x,R
+      {qx'x'...x'xb -> xqx'...x'xb -> xx...qx'xb -> xx...xqxb}
+    Cuando ya no encuentres primas estas en L [Fin]
+    
+[Fin]

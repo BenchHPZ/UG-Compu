@@ -1,0 +1,143 @@
+\documentclass[11pt]{article}
+    \title{Tarea 4 \\ Teor\'ia de la Computaci\'on}
+    \author{Benjam\'in Ruvera}
+    \date{\today}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage[spanish]{babel}
+    
+    
+    \geometry{tmargin=1in, bmargin=1in, lmargin=1.3in, rmargin=1.3in}
+    \graphicspath{{assets/}}
+    \lstset{ mathescape }
+
+
+
+
+\begin{document}
+
+\maketitle
+
+\section*{Ejercicio 3.4}
+
+	\par Los \textbf{Enumeradores (E)} son maquinas con doble cadena. Una de ellas es la impresora, donde \'unicamente se imprimiran elementos; la otra es la cadena de trabajo, que empieza vacia. Adem\'as los E ignoran cualquier entrada que reciban. Estos se encargan de generar lenguajes, lo que implica que imprime TODAS las cadenas que pertenecen a cierto lenguaje. Para definir el aut\'omata debemos dar la \textit{7-tupla} de una \textbf{M\'aquina de Turing (MT)}.
+	\begin{equation}
+		\left(  Q, \Sigma, \Gamma, \delta, q_0, q_a, q_r \right)
+		\label{def: MT}
+	\end{equation}
+	
+	\noindent Para empezar, sabemos que los \textbf{E} son aut\'omatas con doble pila, por lo que debemos considerar la siguiente tupla 
+	\begin{equation}
+		\left( Q, \Sigma, \Gamma_1, \Gamma_2, \delta, q_0, q_a, q_r \right)
+	\end{equation}
+	
+	\noindent donde estos elementos quedan definidos como
+	
+	\begin{quote}\begin{description}
+		\item [$Q$:] El conjunto (finito) de estados del aut\'omata.
+		\item [$\Sigma$]:] El alfabeto de entrad. Este podr\'ia ser vacio dado que la entrada es ignorada por el aut\'omata.
+		\item [$\Gamma_1$:] El alfabeto de la cinta de traajo que debe incluir el algabero del lenguaje a enumerar.
+		\item [$\Gamma_2$:] El alfabeto de la impresora. ESte \'unciamente contiene el alfabeto del elnguaje a enumerar. De manera que $\Gamma_1 \subset \Gamma_2$. 
+		\item [$\delta$:] La funci\'on de transici\'on tal que 
+			$$ \delta: Q\times\Gamma_1 \mapsto Q\times\Gamma_1\times\Gamma_2\times{L,R} $$
+		\item [$q_0$:] El estado inicial.
+		\item [$q_a$:] El conjunto de los estados aceptores.
+		\item [$q_r$:] El conjunto de los estados rechazados.
+	\end{description}\end{quote}
+
+
+\subsection*{Lenguaje enumerado}
+
+De manera que un lenguaje enumerado es aquel que, para alg\'un enumerador E (si este se deja corriendo indefinidamente) eventualmente imprimira todo el lenguaje. O dicho de otra forma; es aquel cuyos elementos son numerables\footnote{Es numerable si y solo si existe una biyecci\'on con los naturales $\mathbb N$}
+
+
+
+
+
+
+
+
+
+
+\section*{Ejercicio 3.6}
+
+	\par Entonces, reproduciendo la demostraci\'on inicial, tenemos que si la Maquina de Turing M reconoce al lenguaje $A$, podemos contruir el enumerador $E$ para $A$. Siendo $s_1, s_2, \dots$ una lista de strings en $\Sigma^*$.
+
+\begin{quote}\begin{lstlisting}
+E := ignorar el input
+  1. Repetir lo siguiente para i=1,2,3,...
+  2.   Ejecutar M para $s_i$
+  3.   Si es aceptado, imprimir s_1
+\end{lstlisting}\end{quote}
+
+	\par Podemos ver que, por definicion en \verb|2|, el enumerador \'unicamente imprimira elementos que sean aceptados por $M$. Por lo que todo elemento que sea imprimido por $E$ es aceptado por $M$
+
+
+
+
+
+
+
+
+
+
+
+\section*{Ejercicio 3.8}
+	
+	\par A continuaci\'on esta el pseudoc\'odigo del ejercicio y m\'as adelante esta la implementaci\'on explicita en forma gr\'afica
+
+	\begin{quote}
+		\lstinputlisting{T4-pseudo-3.8.txt}
+	\end{quote}
+
+
+
+
+
+
+
+
+
+\section*{Ejercicio 3.12}
+
+	\par Vemos que la diferencia entre la \textbf{Maquina de Turing con Reset (MTR)} y la \textbf{Maquina de Turing (MT)} es que el primero sustituye el movimiento izquierda $L$ con el reset $RESET$. Este queda definido por
+	
+	\begin{eqnarray*}
+		\{q, x\dots xqa\} &\rightarrow& \{q_r, q_rx\dots xb\} \\
+		\delta(q,a) &=& (r,b,RESET)
+	\end{eqnarray*}
+	
+	\par Para poder verificar la equivalencia entre la $MTR$ y la $MT$ debemos encontrar una forma de emular el movimiento \verb|L| en funci\'on de los movimientos de $MTR$ \verb|RESET, R|
+
+	\begin{quote}
+		\lstinputlisting{T4-pseudo-3.12.txt}
+	\end{quote}
+
+
+
+
+
+
+
+
+\section*{Ejercicio 3.13}
+
+	\par Sea la \textbf{Maquina de Turing Degenerada (MTD)} como se define en el ejercicio, esta se diferencia de la \textbf{Maquina de Turing (MT)} porque no puede mover el cabezal a la izquierda.
+	\par La principal diferencia entra los aut\'omatas con pila (PL) y las MT es la maner en que acceden a su memoria. Mientras que los primeros se basan en \verb|FIFO|, la segunda tiene libertad para leer su memoria. La MTD no puede leer su mempria libremente, \'unicamente lo puede hacer asia adelante, asi que puede ser que sea equivalente a los AP, pero definitivamente no es equivalente a la MT.
+	\par Por otro lado, la diferencia principal entre los AP y los AF es que los primero no tiene memoria. Aunque parece que los MTD si tienen memoria, \'unicamente pueden escribir sobre el caracter en que esten viendo, por lo que cualquier informacion que tengan guardad en este se perdera en cuanto avancen. Adem\'as, como no pueden retroceder, cualquier cosa que traten de guardar en espacios anteriores queda inaccesible por el MTD en cuanto avance. Por lo que el MTD tampoco es similar a los AP.
+	\par Una \textit{definici\'on rapida} de los AF, es que son maquinas que leen caracteres, sin rettroceder, y cambian de estado. Como esto es lo \'unic que hace nuestro MTD, entonces el MTD es equivalente a un AF.
+
+	
+
+
+
+
+
+
+\end{document}
+

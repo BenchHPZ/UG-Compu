@@ -1,0 +1,21 @@
+
+Si marcamos con x esta pendiente   [x]
+Si marcamos con y esta verificado  [y]
+
+
+Leemos el elemento en la cabeza [Inicio]
+
+	Si encotnramos el fin de la cadena
+		Aceptamos la cadena
+		[Fin]
+	Si leemos 0
+		Marcamos con x
+		Hacemos una de la siguientes
+			Buscamos 0 y 1 y marcamos [y]
+	Si leemos 1
+		Buscamos dos ceros y marcamos [y]
+
+	Regresamos el lector hasta x y marcamos [y]
+	[Inicio]
+
+[Fin]
