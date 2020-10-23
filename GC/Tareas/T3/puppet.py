@@ -39,7 +39,7 @@ def cabeza():
 def torso():
 	glPushMatrix()
 	glRotatef(90.0, 1.0, 0, 0)
-	glScalef(TORSO_RADIO/2, TORSO_ALTO/2, TORSO_ALTO)
+	glScalef(TORSO_RADIO/2, TORSO_ALTO/2, TORSO_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
