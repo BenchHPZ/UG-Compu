@@ -31,7 +31,7 @@ if True:
 
 def cabeza():
 	glPushMatrix()
-	glScalef(CABEZA_RADIO, CABEZA_ALTO/2, CABEZA_RADIO)
+	glScalef(CABEZA_RADIO, CABEZA_RADIO, CABEZA_ALTO/2)
 	glRotatef(45, 0, 1, 0)
 	glutSolidTeapot(1.0)
 	glPopMatrix()
@@ -39,14 +39,14 @@ def cabeza():
 def torso():
 	glPushMatrix()
 	glRotatef(90.0, 1.0, 0, 0)
-	glScalef(TORSO_RADIO/2, TORSO_ALTO/2, TORSO_RADIO)
+	glScalef(TORSO_RADIO/2, TORSO_RADIO, TORSO_ALTO/2)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def brazo_sup_izq():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_ALTO/2, BRAZO_SUP_RADIO)
+	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_RADIO, BRAZO_SUP_ALTO/2)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
@@ -54,49 +54,49 @@ def brazo_sup_izq():
 def brazo_inf_izq():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_INF_RADIO, BRAZO_INF_ALTO/2, BRAZO_INF_RADIO)
+	glScalef(BRAZO_INF_RADIO, BRAZO_INF_RADIO, BRAZO_INF_ALTO/2)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def brazo_sup_der():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_ALTO/2, BRAZO_SUP_RADIO)
+	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_RADIO, BRAZO_SUP_ALTO/2)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def brazo_inf_der():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_INF_RADIO, BRAZO_INF_ALTO/2, BRAZO_INF_RADIO)
+	glScalef(BRAZO_INF_RADIO, BRAZO_INF_RADIO, BRAZO_INF_ALTO/2)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_sup_izq():
 	glPushMatrix()
 	glRotatef(-90, 1, 0, 0)
-	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_ALTO/2, PIERNA_SUP_RADIO)
+	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_RADIO, PIERNA_SUP_ALTO/2)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_inf_izq():
 	glPushMatrix()
 	glRotatef(-90, 1, 0, 0)
-	glScalef(PIERNA_INF_RADIO, PIERNA_INF_ALTO/2, PIERNA_INF_RADIO)
+	glScalef(PIERNA_INF_RADIO, PIERNA_INF_RADIO, PIERNA_INF_ALTO/2)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_sup_der():
 	glPushMatrix()
 	glRotatef(90, 1, 0, 0)
-	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_ALTO/2, PIERNA_SUP_RADIO)
+	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_RADIO, PIERNA_SUP_ALTO/2)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_inf_der():
 	glPushMatrix()
 	glRotatef(90, 1, 0, 0)
-	glScalef(PIERNA_INF_RADIO, PIERNA_INF_ALTO/2, PIERNA_INF_RADIO)
+	glScalef(PIERNA_INF_RADIO, PIERNA_INF_RADIO, PIERNA_INF_ALTO/2)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
@@ -116,13 +116,13 @@ def dibujar_pupete(x, y, z, # Posicion absoluta
 		glTranslatef(0, TORSO_ALTO, 0)
 		cabeza()
 	glPopMatrix()
-	'''
+	
 	glPushMatrix()
 	if True: # Brazo derecho
 		glTranslatef(-TORSO_RADIO, 0, 0)
 		glRotatef(bsd, 0, 0, 1)
 		brazo_sup_der()
-		glTranslatef(BRAZO_SUP_ALTO, 0, 0)
+		glTranslatef(-BRAZO_SUP_ALTO, 0, 0)
 		glRotatef(bid, 0, 0, 1)
 		brazo_inf_der()
 	glPopMatrix()
@@ -153,7 +153,6 @@ def dibujar_pupete(x, y, z, # Posicion absoluta
 		glRotatef(pii, 1, 0, 0);
 		pierna_inf_izq();
 	glPopMatrix()
-	'''
 
 def iluminacion():
 	# Propiedades del material
@@ -195,7 +194,7 @@ def mostrar():
 	# Mover camara
 	glMatrixMode(GL_MODELVIEW)
 	glLoadIdentity()
-	#gluLookAt(eye[0], eye[1], eye[2], at[0], at[1], at[2], 0, 1, 0)
+	#gluLookAt(0, 0, 0, 0, 0, 0, 0, 1, 0)
 	"""
 	glRotatef(xRotate, 0, 1, 0);
 	glRotatef(yRotate, 1, 0, 0);
@@ -211,20 +210,21 @@ def mostrar():
 
 def init():
 
-	glClearColor(1.0, 1.0, 1.0, 1.0)
-
+	#glClearColor(1.0, 1.0, 1.0, 1.0)
+	
 	glMatrixMode(GL_PROJECTION)
 	glLoadIdentity()
 	gluPerspective(60, 1, 1, -10)
 
 	glMatrixMode(GL_MODELVIEW)
 	glLoadIdentity()
-	gluLookAt(0,0,20,
-		      0,0,0,
-		      0,1,0)
+	#gluLookAt(0,0,20,
+	#	      0,0,0,
+	#	      0,1,0)
 
 	glEnable(GL_DEPTH_TEST)
-	iluminacion()
+	#iluminacion()
+
 
 def main():
 	# Init glut para figuras sin apuntadores
