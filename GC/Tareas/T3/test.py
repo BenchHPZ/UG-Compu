@@ -46,13 +46,14 @@ def main():
             		cubetype = solidCube
 
 
-        glRotatef(1, 0, 1, 1)
+        #glRotatef(1, 0, 1, 1)
+        glScale(1,1,0.5)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
         
         cubetype()
 
         pg.display.flip()
-        pg.time.wait(10)
+        pg.time.wait(1000)
 
 if __name__ == "__main__":
     main()

@@ -1,25 +1,31 @@
+# Pygame
 import pygame as pg
-
 from pygame.locals import *
+# PyOpenGL
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
+# Librerias creadas con funcionalidades
+from iluminacion import *
+
+
+
 if True:
-	CABEZA_ALTO      = 1
+	CABEZA_ALTO      = 3
 	CABEZA_RADIO     = 1
 
-	TORSO_ALTO       = 2
+	TORSO_ALTO       = 5
 	TORSO_RADIO      = 1
 
-	BRAZO_SUP_ALTO   = 1
+	BRAZO_SUP_ALTO   = 3
 	BRAZO_SUP_RADIO  = 0.5
-	BRAZO_INF_ALTO   = 1
+	BRAZO_INF_ALTO   = 2
 	BRAZO_INF_RADIO  = 0.5
 
-	PIERNA_SUP_ALTO  = 1
+	PIERNA_SUP_ALTO  = 3
 	PIERNA_SUP_RADIO = 0.5
-	PIERNA_INF_ALTO  = 1
+	PIERNA_INF_ALTO  = 2
 	PIERNA_INF_RADIO = 0.5
 
 	SLICES = 10
@@ -31,22 +37,23 @@ if True:
 
 def cabeza():
 	glPushMatrix()
-	glScalef(CABEZA_RADIO, CABEZA_RADIO, CABEZA_ALTO/2)
+	glScalef(CABEZA_RADIO, CABEZA_ALTO/2, CABEZA_RADIO)
 	glRotatef(45, 0, 1, 0)
+	glutSolidSphere(1, SLICES, STACKS)
 	glutSolidTeapot(1.0)
 	glPopMatrix()
 
 def torso():
 	glPushMatrix()
 	glRotatef(90.0, 1.0, 0, 0)
-	glScalef(TORSO_RADIO/2, TORSO_RADIO, TORSO_ALTO/2)
+	glScalef(TORSO_RADIO/2, TORSO_ALTO/2, TORSO_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def brazo_sup_izq():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_RADIO, BRAZO_SUP_ALTO/2)
+	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_ALTO/2, BRAZO_SUP_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
@@ -54,49 +61,49 @@ def brazo_sup_izq():
 def brazo_inf_izq():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_INF_RADIO, BRAZO_INF_RADIO, BRAZO_INF_ALTO/2)
+	glScalef(BRAZO_INF_RADIO, BRAZO_INF_ALTO/2, BRAZO_INF_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def brazo_sup_der():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_RADIO, BRAZO_SUP_ALTO/2)
+	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_ALTO/2, BRAZO_SUP_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def brazo_inf_der():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_INF_RADIO, BRAZO_INF_RADIO, BRAZO_INF_ALTO/2)
+	glScalef(BRAZO_INF_RADIO, BRAZO_INF_ALTO/2, BRAZO_INF_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_sup_izq():
 	glPushMatrix()
 	glRotatef(-90, 1, 0, 0)
-	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_RADIO, PIERNA_SUP_ALTO/2)
+	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_ALTO/2, PIERNA_SUP_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_inf_izq():
 	glPushMatrix()
 	glRotatef(-90, 1, 0, 0)
-	glScalef(PIERNA_INF_RADIO, PIERNA_INF_RADIO, PIERNA_INF_ALTO/2)
+	glScalef(PIERNA_INF_RADIO, PIERNA_INF_ALTO/2, PIERNA_INF_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_sup_der():
 	glPushMatrix()
 	glRotatef(90, 1, 0, 0)
-	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_RADIO, PIERNA_SUP_ALTO/2)
+	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_ALTO/2, PIERNA_SUP_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_inf_der():
 	glPushMatrix()
 	glRotatef(90, 1, 0, 0)
-	glScalef(PIERNA_INF_RADIO, PIERNA_INF_RADIO, PIERNA_INF_ALTO/2)
+	glScalef(PIERNA_INF_RADIO, PIERNA_INF_ALTO/2, PIERNA_INF_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
@@ -108,15 +115,15 @@ def dibujar_pupete(x, y, z, # Posicion absoluta
 	Las sentencias de control if son incesesarias pero ayudan
 	a tener una mejor visualizacion de la estructura generada.
 	"""
+	# Centramos en pantalla
 	glScalef(0.2, 0.2, 0.5)
+
 	torso()
-	
 	glPushMatrix()
 	if True: # Cabeza
-		glTranslatef(0, TORSO_ALTO, 0)
+		glTranslatef(0, CABEZA_ALTO/1.5, 0)
 		cabeza()
 	glPopMatrix()
-	
 	glPushMatrix()
 	if True: # Brazo derecho
 		glTranslatef(-TORSO_RADIO, 0, 0)
@@ -154,34 +161,7 @@ def dibujar_pupete(x, y, z, # Posicion absoluta
 		pierna_inf_izq();
 	glPopMatrix()
 
-def iluminacion():
-	# Propiedades del material
-	mat_specular =  (0.7, 0, 0, 1.0)
-	mat_diffuse  =  (0.5, 0, 0, 1.0)
-	mat_ambient  =  (0.5, 0, 0, 1.0)
-	mat_shininess = (7.0)
 
-	# Propiedades de iluminacion
-	light_ambient =( .5, .0, .0, 1.0)
-	light_diffuse =( .5, .0, .0, 1.0)
-	light_specular =( .7, .0, .0, 1.0)
-	light_position =( 100.0, 80.0, 120.0 , 1.0)
-
-	# Definir propiedades de ambiente para light0
-	glLight(GL_LIGHT0, GL_AMBIENT, light_ambient)
-	glLight(GL_LIGHT0, GL_DIFFUSE, light_diffuse)
-	glLight(GL_LIGHT0, GL_SPECULAR, light_specular)
-	glLight(GL_LIGHT0, GL_POSITION, light_position)
-
-	# Definir propiedades para los materiales
-	glMaterial(GL_FRONT, GL_SPECULAR, mat_specular)
-	glMaterial(GL_FRONT, GL_AMBIENT, mat_ambient)
-	glMaterial(GL_FRONT, GL_DIFFUSE, mat_diffuse)
-	glMaterial(GL_FRONT, GL_SHININESS, mat_shininess)
-
-	glShadeModel(GL_SMOOTH)      # smooth shading
-	glEnable(GL_LIGHTING)    # iluminacion
-	glEnable(GL_LIGHT0)      # activar light0
 
 def mostrar():
 	# Buffer posterior
@@ -194,36 +174,20 @@ def mostrar():
 	# Mover camara
 	glMatrixMode(GL_MODELVIEW)
 	glLoadIdentity()
-	#gluLookAt(0, 0, 0, 0, 0, 0, 0, 1, 0)
-	"""
-	glRotatef(xRotate, 0, 1, 0);
-	glRotatef(yRotate, 1, 0, 0);
-	"""
-	# Cambiar estos valores para mover todo
+
 	dibujar_pupete(0, 0, 0, 
-					0, 0, 0, 0, 
-					0, 0, 0, 0)
+				   0, 0, 0, 0, 
+				   0, 0, 0, 0)
 
 	glFlush()
-	#glutSwapBuffers()
 
 
 def init():
 
+	# Fondo blanco
 	#glClearColor(1.0, 1.0, 1.0, 1.0)
-	
-	glMatrixMode(GL_PROJECTION)
-	glLoadIdentity()
-	gluPerspective(60, 1, 1, -10)
 
-	glMatrixMode(GL_MODELVIEW)
-	glLoadIdentity()
-	#gluLookAt(0,0,20,
-	#	      0,0,0,
-	#	      0,1,0)
-
-	glEnable(GL_DEPTH_TEST)
-	#iluminacion()
+	iluminacion()
 
 
 def main():
@@ -237,7 +201,8 @@ def main():
 	sz_display = (800, 650)
 	pg.display.set_mode(sz_display, DOUBLEBUF|OPENGL)
 
-	#init()
+	init()
+	#iluminacion()
 	
 
 	while True:
