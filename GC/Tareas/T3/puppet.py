@@ -12,7 +12,7 @@ from iluminacion import *
 
 
 if True:
-	CABEZA_ALTO      = 3
+	CABEZA_ALTO      = 2
 	CABEZA_RADIO     = 1
 
 	TORSO_ALTO       = 5
@@ -37,23 +37,22 @@ if True:
 
 def cabeza():
 	glPushMatrix()
-	glScalef(CABEZA_RADIO, CABEZA_ALTO/2, CABEZA_RADIO)
+	glScalef(CABEZA_RADIO, CABEZA_ALTO, CABEZA_RADIO)
 	glRotatef(45, 0, 1, 0)
-	glutSolidSphere(1, SLICES, STACKS)
 	glutSolidTeapot(1.0)
 	glPopMatrix()
 
 def torso():
 	glPushMatrix()
-	glRotatef(90.0, 1.0, 0, 0)
-	glScalef(TORSO_RADIO/2, TORSO_ALTO/2, TORSO_RADIO)
+	glScalef(TORSO_RADIO, TORSO_ALTO, TORSO_RADIO)
+	glRotatef(90, 0, 1, 0)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def brazo_sup_izq():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_ALTO/2, BRAZO_SUP_RADIO)
+	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_ALTO, BRAZO_SUP_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
@@ -61,49 +60,49 @@ def brazo_sup_izq():
 def brazo_inf_izq():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_INF_RADIO, BRAZO_INF_ALTO/2, BRAZO_INF_RADIO)
+	glScalef(BRAZO_INF_RADIO, BRAZO_INF_ALTO, BRAZO_INF_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def brazo_sup_der():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_ALTO/2, BRAZO_SUP_RADIO)
+	glScalef(BRAZO_SUP_RADIO, BRAZO_SUP_ALTO, BRAZO_SUP_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def brazo_inf_der():
 	glPushMatrix()
 	glRotatef(-90, 0, 1, 0)
-	glScalef(BRAZO_INF_RADIO, BRAZO_INF_ALTO/2, BRAZO_INF_RADIO)
+	glScalef(BRAZO_INF_RADIO, BRAZO_INF_ALTO, BRAZO_INF_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_sup_izq():
 	glPushMatrix()
 	glRotatef(-90, 1, 0, 0)
-	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_ALTO/2, PIERNA_SUP_RADIO)
+	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_ALTO, PIERNA_SUP_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_inf_izq():
 	glPushMatrix()
 	glRotatef(-90, 1, 0, 0)
-	glScalef(PIERNA_INF_RADIO, PIERNA_INF_ALTO/2, PIERNA_INF_RADIO)
+	glScalef(PIERNA_INF_RADIO, PIERNA_INF_ALTO, PIERNA_INF_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_sup_der():
 	glPushMatrix()
 	glRotatef(90, 1, 0, 0)
-	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_ALTO/2, PIERNA_SUP_RADIO)
+	glScalef(PIERNA_SUP_RADIO, PIERNA_SUP_ALTO, PIERNA_SUP_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
 def pierna_inf_der():
 	glPushMatrix()
 	glRotatef(90, 1, 0, 0)
-	glScalef(PIERNA_INF_RADIO, PIERNA_INF_ALTO/2, PIERNA_INF_RADIO)
+	glScalef(PIERNA_INF_RADIO, PIERNA_INF_ALTO, PIERNA_INF_RADIO)
 	glutSolidSphere(1, SLICES, STACKS)
 	glPopMatrix()
 
@@ -116,12 +115,12 @@ def dibujar_pupete(x, y, z, # Posicion absoluta
 	a tener una mejor visualizacion de la estructura generada.
 	"""
 	# Centramos en pantalla
-	glScalef(0.2, 0.2, 0.5)
+	glScalef(0.1, 0.1, 0.1)
 
 	torso()
 	glPushMatrix()
 	if True: # Cabeza
-		glTranslatef(0, CABEZA_ALTO/1.5, 0)
+		glTranslatef(0, TORSO_ALTO/1, 0)
 		cabeza()
 	glPopMatrix()
 	glPushMatrix()
@@ -160,6 +159,7 @@ def dibujar_pupete(x, y, z, # Posicion absoluta
 		glRotatef(pii, 1, 0, 0);
 		pierna_inf_izq();
 	glPopMatrix()
+	
 
 
 
