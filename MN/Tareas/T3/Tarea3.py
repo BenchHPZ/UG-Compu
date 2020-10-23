@@ -159,7 +159,7 @@ def forwardSubstitution( L, n, b, t,/,dtype=np.float64):
         
         x = np.zeros((n), dtype=dtype)
         for i in range(n):
-            x[i] = (b[0,i] - np.sum([L[i,j]*x[j] for j in range(i-1)],
+            x[i] = (b[0,i] - np.sum([L[i,j]*x[j] for j in range(i)],
                                     dtype=dtype)
                    )/L[i,i]
 

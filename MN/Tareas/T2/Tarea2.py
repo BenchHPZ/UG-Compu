@@ -446,7 +446,7 @@ def metodo_horner(n, a, x0,/,v=True, td=np.float64):
     
     for k in range(1,n):
         b[k] = a[k] - b[k-1]*x0
-    return a[-1]-b[-2]*x0
+    return a[-1]-b[-2]*x0, b
 
 
 # In[76]:
