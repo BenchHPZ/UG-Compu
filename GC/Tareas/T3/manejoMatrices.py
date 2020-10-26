@@ -1,9 +1,6 @@
 """ Modulo para manejo de matrices de transformadas. """
 
 from OpenGL.GL import *
-from OpenGL.GLU import *
-from OpenGL.GLUT import *
-
 from functools import wraps
 
 

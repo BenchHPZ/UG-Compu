@@ -7,7 +7,6 @@ from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
 # Librerias creadas con funcionalidades
-from clases import *
 from dibujar import *
 from iluminacion import *
 
