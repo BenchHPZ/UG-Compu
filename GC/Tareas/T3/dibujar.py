@@ -150,6 +150,8 @@ class Posicion:
         self._ang_rodilla_izq = 0
         self._ang_pie_izq = 0
 
+        self.PARAMETROS = 20-1
+
     def __hash__(self):
         ret = hashlib.md5()
         ret.update("".join([f'{val}' for val in self.__dict__.values()]).encode('utf-8'))
@@ -382,10 +384,10 @@ class Posicion:
         ]
 
     def _charge_tuple(self, args):
-        PARAMETROS = 20 - 2
+
         flag = True
 
-        total = [None for _ in range(PARAMETROS)]
+        total = [None for _ in range(self.PARAMETROS)]
         lon = len(args)
         if lon == 12:
             total[1:1 + lon] = args
@@ -421,7 +423,7 @@ class Posicion:
                         setattr(self, params[i], total[i])
             else:
                 raise Exception('Error de tamanios')
-            return True
+            return self.get_all()
         return False
 
     def set_delta_tupla(self, *args):
@@ -438,8 +440,7 @@ class Posicion:
         return False
 
     def delta_aleatorio(self, paso=5):
-        PARAMETROS = 20
-        tupla = [random.choice([-1, 0, 1]) * paso for _ in range(PARAMETROS)]
+        tupla = [random.choice([-1, -0.5, 0, 0.5, 1]) * paso for _ in range(self.PARAMETROS+1)]
         return self.set_delta_tupla(*tupla)
 
 
@@ -853,5 +854,3 @@ def marioneta(pos: Posicion):
             with Jerarquia() as brazo_izq:
                 brazo_izq.trasladar(__dim.HOMBROS_ALTO / 2, 0, 0)
                 brazo(derecho=False, pos=pos)
-
-        None

@@ -12,15 +12,14 @@ De manera que, respecto a los objetivos que se plantearon en la tarea, reporto e
 
 ### Proporciones razonables y uniones logicas. Vecinos unidos por orillas y no rotan por su centro. (reconoce una figura)
 
-Pues ...
-
+Si es posible distinguir una figura en el la vista principal, cuando se rotann en cualquier momento, se mantieen las figuras y las relaciones sin problema alguno.
 ### Marioneta se puede rotar globalmente y trasladarse.
 
-Este ...
+Si puede, aunque es necesario escribir los datos directamente en el espacio de configuraciones, No tuve mucha suerte con la interfaz de usuario.
 
 ### Se puede reiniciar la configuracion de la marioneta.
 
-Digamos que si la marioneta no existe... Siempre esta en su configuraion inicial 😉
+Si se puede reiniciar con la tecla `o`
 
 ### Se utiliza una estructura jerarquica bien diseniada (uso de primitivas)
 
@@ -28,16 +27,16 @@ Es la pantalla negra una primitiva de algo que no existe?
 
 ### Los movimientos de las articulaciones son correctos
 
-Algo que no existe no puede desarmarse
+Creo que lo logre sin problemas, se puede aprecira en el video que dadas distintas configuraciones se manteinen los limites establecidos y no se puede forzar angulos anomalos.
 
 ### Los angulos estan restringidos de tal manera que no se permiten configuraciones antinaturales
 
-Tu creeme que detras del negro si no se deforma demasiado.
+Sip, como mencione en el punto anterior.
 
-### EStan implementadas las funciones de profundidad
+### Estan implementadas las funciones de profundidad
 
-😉😉😉
+Tambien, solo que deben ser puestas directamente en el archivo de configuraciones
 
 ### Se mantiene pila de undo/redo
 
-Si no puedes hacer cambios en la marioneta el undo y redo te llevaran siempre a la misma sitaucion no. Justo la que se puede ver 😉
+Pude implementar la pila undo redo exitosamente, pero a la hora de usarlo con los datos de posicion algo me salio mal, creo que es el tipo de dato que estoy regresando.

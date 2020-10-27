@@ -54,6 +54,8 @@ class PosStack:
 
     def push(self, data):
         """ Agregamos un nuevo elemento. """
+        if data == None:
+            return
         if self._act >= self._max_lon-1:
             # Eliminamos el primero y recorremos
             self._data[:-1] = self._data[1:]
@@ -69,17 +71,21 @@ class PosStack:
         """ Regresamos el indice en uno (si se puede) """
         if self._act > 0:
             self._act -= 1
-            return True
-        return False
+            return self.read()
+        return None
 
     def redo(self):
         """ Avanzamos el indice en uno (si se puede) """
         if self._act < self._max_lon-1 and\
                 self._data[self._act+1] is not None:
             self._act += 1
-            return True
-        return False
+            return self.read()
+        return None
 
     def read(self):
         """ Regresamos la informacion considerada actual. """
         return self._data[self._act]
+
+    @property
+    def data(self):
+        return self._data
