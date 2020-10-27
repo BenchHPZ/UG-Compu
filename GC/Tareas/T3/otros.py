@@ -35,22 +35,51 @@ class Inmutable(object):
         self.__dict__[key] = value
 
 
-class Prb(Inmutable):
-    """ Para demostrar el funcionamiento de Inmutable """
+class PosStack:
+    """ Pila de posiciones.
 
-    def __init__(self):
-        self.num = 10
-        self.string = 'comida'
-        self.flotante = 1.2
+    Dado que debemos poder hacer undo y redo sobre las tranformaciones
+    de la figura, usare una especia de pila (Stack), de tamanio fijo.
 
-    num2 = 11
+    Cuando hagamos undo se mantendran todos los elementos hasta que se
+    realice otra transformacion. En este caso se ignroara all que este
+    despues del nodo actual. Si se trata de actualizar una matriz igual
+    a la ultima agregada sera ignorada la operacion.
+    """
 
+    def __init__(self, max_lon=10):
+        self._data = [None for _ in range(max_lon)]
+        self._act = -1
+        self._max_lon = max_lon
 
-if __name__ == '__main__':
-    prb = Prb()
-    print(prb.__dict__)
-    print()
-    print(prb.num)
-    print()
-    prb.num = 123
-    print(prb.num)
+    def push(self, data):
+        """ Agregamos un nuevo elemento. """
+        if self._act >= self._max_lon-1:
+            # Eliminamos el primero y recorremos
+            self._data[:-1] = self._data[1:]
+            self._act -= 1
+
+        self._act += 1
+        self._data[self._act] = data
+        # Nuleamos lo que este despues de nosotros.
+        for i in range(self._act+1, self._max_lon):
+            self._data[i] = None
+
+    def undo(self):
+        """ Regresamos el indice en uno (si se puede) """
+        if self._act > 0:
+            self._act -= 1
+            return True
+        return False
+
+    def redo(self):
+        """ Avanzamos el indice en uno (si se puede) """
+        if self._act < self._max_lon-1 and\
+                self._data[self._act+1] is not None:
+            self._act += 1
+            return True
+        return False
+
+    def read(self):
+        """ Regresamos la informacion considerada actual. """
+        return self._data[self._act]

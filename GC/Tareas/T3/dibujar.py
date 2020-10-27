@@ -3,6 +3,9 @@
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 
+import hashlib
+import random
+
 from otros import Inmutable
 from manejoMatrices import Jerarquia, matriz_propia
 
@@ -78,9 +81,8 @@ class Limites(Inmutable):
     """ Clase para limites de posiciones. """
 
     def __init__(self):
-
         # Posicion global
-        self.global_max = Dimensiones().ESCALA * 10
+        self.global_max = 10
         self.global_min = -self.global_max
         # Central
         self.central_ang_max = 20
@@ -103,7 +105,7 @@ class Limites(Inmutable):
         # Piernas
         self.pierna_sup_max = 90
         self.pierna_sup_min = -10
-        self.pierna_inf_max = 0
+        self.pierna_inf_max = 10
         self.pierna_inf_min = -110
         self.pie_max = 75
         self.pie_min = -self.pie_max
@@ -121,7 +123,7 @@ class Posicion:
         manera irresponsable el modulo.
         """
         # Posicion global
-        self._pos_mundo = (0, 0, 0)
+        self._pos_mundo = [0, 0, 0]
 
         # Angulos centrales
         self._ang_hombros = 0
@@ -148,6 +150,12 @@ class Posicion:
         self._ang_rodilla_izq = 0
         self._ang_pie_izq = 0
 
+    def __hash__(self):
+        ret = hashlib.md5()
+        ret.update("".join([f'{val}' for val in self.__dict__.values()]).encode('utf-8'))
+        return hash(ret.hexdigest())
+
+    # Propiedades, setters y getters con los limites de las variables.
     # Pierna derecho
     @property
     def ang_gluteo_der(self):
@@ -314,8 +322,125 @@ class Posicion:
 
     @pos_mundo.setter
     def pos_mundo(self, value):
-        if self.__lim.global_min < value < self.__lim.global_max:
+        if self.__lim.global_min < value[0] < self.__lim.global_max \
+                and self.__lim.global_min < value[1] < self.__lim.global_max \
+                and self.__lim.global_min < value[2] < self.__lim.global_max:
             self._pos_mundo = value
+
+    def get_all(self):
+        """ Return values of all atributes. """
+        return [
+            self.pos_mundo,
+            # Lado derecho
+            self.ang_hombro_der,
+            self.ang_codo_der,
+            self.ang_mano_der,
+            self.ang_gluteo_der,
+            self.ang_rodilla_der,
+            self.ang_pie_der,
+            # Lado izquierdo
+            self.ang_hombro_izq,
+            self.ang_codo_izq,
+            self.ang_mano_izq,
+            self.ang_gluteo_izq,
+            self.ang_rodilla_izq,
+            self.ang_pie_izq,
+            # Angulos cabeza
+            self.ang_cuello,
+            self.ang_cabeza_rot,
+            self.ang_cabeza_si,
+            # Extras
+            self.ang_hombros,
+            self.ang_cadera,
+        ]
+
+    def get_setters(self):
+        """ Return all name functions to set atributes. """
+        return [
+            'pos_mundo',
+            # Lado derecho
+            'ang_hombro_der',
+            'ang_codo_der',
+            'ang_mano_der',
+            'ang_gluteo_der',
+            'ang_rodilla_der',
+            'ang_pie_der',
+            # Lado izquierdo
+            'ang_hombro_izq',
+            'ang_codo_izq',
+            'ang_mano_izq',
+            'ang_gluteo_izq',
+            'ang_rodilla_izq',
+            'ang_pie_izq',
+            # Angulos cabeza
+            'ang_cuello',
+            'ang_cabeza_rot',
+            'ang_cabeza_si',
+            # Extras
+            'ang_hombros',
+            'ang_cadera',
+        ]
+
+    def _charge_tuple(self, args):
+        PARAMETROS = 20 - 2
+        flag = True
+
+        total = [None for _ in range(PARAMETROS)]
+        lon = len(args)
+        if lon == 12:
+            total[1:1 + lon] = args
+        elif lon == 15:
+            total[1:1 + lon] = args
+        elif lon == 17:
+            total[1:1 + lon] = args
+        elif lon == 20:
+            total[1:] = args[:-3]
+            total[0] = (args[-3], args[-2], args[-1])
+        else:
+            flag = False
+        return total, flag
+
+    def set_tupla(self, *args):
+        """ Se reciben tuplas para establecer como valores de los angulos
+        del modelo. Todos los valroes que se reciban aqui pasaran por los
+        setters para mantener
+
+        Si se reciben 12 elementos, se aplicara sobre las extremidades, de
+        izquierda a derecha (primero cada lado), de el hombro al pie.
+        Si se reciben 15 elemetos, se aplican a los anteriores mas los tres
+        puntos de la cara.
+        Si se reciben 17 se tambien se aplicara a cadera y hombros.
+        Y si se reciben 20, tambien se trasladara.
+        """
+        total, flag = self._charge_tuple(args)
+        if flag:
+            params = self.get_setters()
+            if len(params) == len(total):
+                for i in range(len(total)):
+                    if total[i] is not None:
+                        setattr(self, params[i], total[i])
+            else:
+                raise Exception('Error de tamanios')
+            return True
+        return False
+
+    def set_delta_tupla(self, *args):
+        total, flag = self._charge_tuple(args)
+        if flag:
+            params = self.get_setters()
+            if len(params) == len(total):
+                for i in range(1, len(total)):
+                    if total[i] is not None:
+                        setattr(self, params[i], getattr(self, params[i]) + total[i])
+            else:
+                raise Exception('Error de tamanios')
+            return self.get_all()
+        return False
+
+    def delta_aleatorio(self, paso=5):
+        PARAMETROS = 20
+        tupla = [random.choice([-1, 0, 1]) * paso for _ in range(PARAMETROS)]
+        return self.set_delta_tupla(*tupla)
 
 
 ####################################
