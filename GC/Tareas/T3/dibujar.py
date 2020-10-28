@@ -358,6 +358,7 @@ class Posicion:
             self.ang_cadera,
         ]
 
+    @property
     def get_setters(self):
         """ Return all name functions to set atributes. """
         return [
@@ -418,7 +419,7 @@ class Posicion:
         """
         total, flag = self._charge_tuple(args)
         if flag:
-            params = self.get_setters()
+            params = self.get_setters
             if len(params) == len(total):
                 for i in range(len(total)):
                     if total[i] is not None:
@@ -431,7 +432,7 @@ class Posicion:
     def set_delta_tupla(self, *args):
         total, flag = self._charge_tuple(args)
         if flag:
-            params = self.get_setters()
+            params = self.get_setters
             if len(params) == len(total):
                 for i in range(1, len(total)):
                     if  total[i] is not None:
