@@ -5,9 +5,9 @@ Archivo del proyecto T3
 """
 
 import pygame as pg
-from pygame.locals import *
-from functools import wraps
+import random
 
+from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 
@@ -22,7 +22,7 @@ def nueva_pantalla(limpiar=True, init=False, sz_display=(800, 700), ejes=False, 
         pg.init()
         glutInit(sys.argv)
         iluminacion()
-        ret = pg.display.set_mode(sz_display, DOUBLEBUF|OPENGL)
+        ret = pg.display.set_mode(sz_display, DOUBLEBUF | OPENGL)
 
     # Buffer posterior
     glDrawBuffer(GL_BACK)
@@ -40,53 +40,52 @@ def nueva_pantalla(limpiar=True, init=False, sz_display=(800, 700), ejes=False, 
     return ret, pos
 
 
-def manejar_eventos():
-    eventos = {}
-    for events in pg.event.get():
+def manejar_eventos(estados):
+    paso = 0.5
+    estado = None
+    delta = [None for _ in range(20)]
+
+    for events in estados:
         if events.type == pg.QUIT:
             pg.quit()
             quit()
 
         if events.type == pg.KEYDOWN:
             if events.key == pg.K_DOWN:
-                eventos['down'] = True
-            if events.key == pg.K_UP:
-                eventos['up'] = True
-            if events.key == pg.K_LEFT:
-                eventos['left'] = True
-            if events.key == pg.K_RIGHT:
-                eventos['right'] = True
+                delta[0] = [0, -paso, 0]
+                estado = 'posicion'
+            elif events.key == pg.K_UP:
+                delta[0] = [0, paso, 0]
+                estado = 'posicion'
+            elif events.key == pg.K_LEFT:
+                delta[0] = [-paso, 0, 0]
+                estado = 'posicion'
+            elif events.key == pg.K_RIGHT:
+                delta[0] = [paso, 0, 0]
+                estado = 'posicion'
 
-            if events.key == pg.K_b:
-                eventos['b'] = True
+            elif events.key == pg.K_a:
+                estado = 'aleat'
             elif events.key == pg.K_o:
-                eventos['o'] = True
+                delta = [0 for _ in range(20)]
+                estado = 'set'
             elif events.key == pg.K_s:
-                eventos['set'] = [
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                    float(input()),
-                ]
-                print('Espere...')
+                conf = input('Ingrese los parametros: (separdos por espacios)\n')
+                try:
+                    conf = conf.split()
+                    delta = [0 for _ in range(20)]
+                    delta[:len(conf)] = conf
+                    delta = [int(ele) if ele is not None else 0 for ele in delta]
+                    estado = 'delta'
+                except:
+                    print('Algo salio mal =(')
 
-            if events.key == pg.K_u:
-                eventos['undo'] = True
+            elif events.key == pg.K_u:
+                estado = 'undo'
             elif events.key == pg.K_r:
-                eventos['redo'] = True
+                estado = 'redo'
 
-    return eventos
+    return delta, estado
 
 
 def fin_bucle(espera=10):
@@ -95,9 +94,5 @@ def fin_bucle(espera=10):
 
 
 def bucle_aplicacion(pos: Posicion, pila: PosStack):
-
-
-
-
     marioneta(pos)
     fin_bucle(espera=500)

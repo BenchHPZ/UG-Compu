@@ -6,6 +6,8 @@ from OpenGL.GLUT import *
 import hashlib
 import random
 
+from typing import List
+
 from otros import Inmutable
 from manejoMatrices import Jerarquia, matriz_propia
 
@@ -323,7 +325,7 @@ class Posicion:
         return self._pos_mundo
 
     @pos_mundo.setter
-    def pos_mundo(self, value):
+    def pos_mundo(self, value: List[int]):
         if self.__lim.global_min < value[0] < self.__lim.global_max \
                 and self.__lim.global_min < value[1] < self.__lim.global_max \
                 and self.__lim.global_min < value[2] < self.__lim.global_max:
@@ -432,7 +434,7 @@ class Posicion:
             params = self.get_setters()
             if len(params) == len(total):
                 for i in range(1, len(total)):
-                    if total[i] is not None:
+                    if  total[i] is not None:
                         setattr(self, params[i], getattr(self, params[i]) + total[i])
             else:
                 raise Exception('Error de tamanios')
