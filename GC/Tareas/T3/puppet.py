@@ -50,9 +50,9 @@ def main_e():
 
 
 if __name__ == '__main__':
-    op = input('Opcion de ejecucion: (e := Experimental, b := Estable)\n')
+    # op = input('Opcion de ejecucion: (e := Experimental, b := Estable)\n')
 
-    if op.startswith('e'):
+    if True:
         main_e()
-    elif op.startswith('b'):
-        main_b()
+    # elif op.startswith('b'):
+    #    main_b()

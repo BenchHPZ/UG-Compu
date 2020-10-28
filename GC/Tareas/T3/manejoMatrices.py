@@ -25,11 +25,10 @@ def matriz_propia(fun):
 
     return ret_fun
 
+
 #######################################
 # Clases para manejo de matrices #####
 #####################################
-
-
 class Jerarquia:
     """ Clase para manejar Jerarquia como contexto.
 
