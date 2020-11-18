@@ -1,0 +1,6 @@
+Github
+https://gist.github.com/BenchHPZ/54fd19b1171c5f26a81344e49d1c8f83#file-1tareagrafos-ipynb
+
+Colab
+https://colab.research.google.com/gist/BenchHPZ/54fd19b1171c5f26a81344e49d1c8f83/1tareagrafos.ipynb
+
